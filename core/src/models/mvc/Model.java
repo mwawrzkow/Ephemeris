@@ -19,14 +19,19 @@ public class Model extends ObserverSubject {
 	public PerspectiveCamera cam;
 	public Model() {
         cam = new PerspectiveCamera(67, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        cam.position.set(25f, 25f, 25f);
+        		 
+        cam.position.set(150f, 150f, 0f);
         cam.lookAt(0,0,0);
         cam.near = 1f;
         cam.far = 300f;
         cam.update();
-		engine = new PEngine(); 
-		this.input = new Input(engine); 
+		
+        engine = new PEngine();
+		this.input = new Input(engine);
+		engine.init(input, cam); 
+		Gdx.input.setInputProcessor(this.input);
 		update = new Update(); 
+//		engine.startPhysics();
 	}
 	@Override
 	public void NotifyObserver(Subject s) {
@@ -40,5 +45,6 @@ public class Model extends ObserverSubject {
 	public PerspectiveCamera getCam() {
 		return cam; 
 	}
+
 
 }

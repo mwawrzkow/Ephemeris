@@ -1,5 +1,6 @@
 package models.mvc;
 
+import com.badlogic.gdx.graphics.PerspectiveCamera;
 import com.badlogic.gdx.graphics.g3d.ModelBatch;
 
 import models.observersubject.ObserverSubject;
@@ -22,5 +23,7 @@ public class View extends ObserverSubject {
 		// TODO Auto-generated method stub
 		
 	}
-
+	public PerspectiveCamera getCam() { 
+		return model.getCam();
+	}
 }

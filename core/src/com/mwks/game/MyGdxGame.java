@@ -43,46 +43,13 @@ public class MyGdxGame extends ApplicationAdapter implements Observer {
     public void create () {
     	modelBatch = new ModelBatch();
         view = new View(); 
-//        File file = new File(ClassLoader.getSystemResource("objs/test/satellite_obj.obj").getFile());
-//        String context = new String();
-//        try {
-//        	context = new String(Files.readAllBytes(file.toPath()));
-//		} catch (IOException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//        ModelLoader loader = new ObjLoader();
-//        model = loader.loadModel(new FileHandle(file));
-//        instance = new ModelInstance(model);
-//        ClassLoader classLoader = getClass().getClassLoader(); 
-        
-        /*
-         * 	Default File Loading session. Should be specific object with the data done by itself. 
-        
-        		
-        
-        try {
-			
-			System.out.println("File Found");
-			System.out.println(context);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		*/ 
     }
 
     @Override
     public void render () {
         Gdx.gl.glViewport(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);       
-        view.render(modelBatch); 
-//        modelBatch.render(instance,environment);      
-//        instance.transform.setToRotation(Vector3.Z, x++);
-//        if(x > 360)
-//        	x =0 ;       
-        
-//    	cam.update();
+        view.render(modelBatch);
     }
 
     @Override
@@ -97,6 +64,8 @@ public class MyGdxGame extends ApplicationAdapter implements Observer {
 
     @Override
     public void resize (int width, int height) {
+    	view.getCam().viewportHeight = height; 
+    	view.getCam().viewportWidth = width;
     }
 
     @Override

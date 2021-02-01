@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.g3d.Model;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
 import com.badlogic.gdx.graphics.g3d.loader.ObjLoader;
 
+import physics.objects.DynamicObject;
 import physics.objects.abstracts.Primitive;
 
 public class Loader3d {
@@ -23,6 +24,15 @@ public class Loader3d {
 		File file = new File(ClassLoader.getSystemResource(location).getFile());
 		Model model = loader.loadModel(new FileHandle(file));
 		Primitive e = new Primitive(new ModelInstance(model));
+		return e; 
+		 
+	}
+	public Primitive CreateDynamicObject(String location) throws IOException {
+		 
+		//~~~~ objs/test/satellite_obj.obj
+		File file = new File(ClassLoader.getSystemResource(location).getFile());
+		Model model = loader.loadModel(new FileHandle(file));
+		Primitive e = new DynamicObject(new ModelInstance(model));
 		return e; 
 		 
 	}
