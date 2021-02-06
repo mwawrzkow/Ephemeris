@@ -4,7 +4,9 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Buttons;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.graphics.g3d.ModelInstance;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 
@@ -32,14 +34,19 @@ public class Input implements InputProcessor {
 		switch(keycode) {
 		case Keys.NUM_1:
 			FocusedObject =0; 
-			engine.getCamera().FollowObject(engine.getPrimitives().get(0),distance);
+			engine.getCamera().FollowObject(engine.getModelInstances().get(0),distance);
 			return true; 
 		case Keys.NUM_2:
 			FocusedObject = 1; 
-			engine.getCamera().FollowObject(engine.getPrimitives().get(1),distance);			
+			engine.getCamera().FollowObject(engine.getModelInstances().get(1),distance);	
+//			engine.getCamera().getCamera().lookAt(engine.getPrimitives().get(0).transform.getTranslation(new Vector3()));
 			return true;
 		}
 		return false;
+	}
+	
+	private void CameraFollow(ModelInstance modelInstance, float distance) { 
+		
 	}
 
 	@Override
@@ -76,14 +83,17 @@ public class Input implements InputProcessor {
 		// TODO Auto-generated method stub
 		return false;
 	}
-
+	private void rotateAroundObject(int screenX, int screenY) {
+		Vector3 vec = new Vector3((mousePos.x - screenX)/Gdx.graphics.getWidth(), (mousePos.y - screenY)/Gdx.graphics.getHeight(), 0); 
+		float angle = (float) Math.atan2((vec.x),vec.y) * MathUtils.radiansToDegrees/100; 
+		engine.getCamera().getCamera().rotate(new Matrix4());;
+		engine.getCamera().RotateAroundObject(engine.getModelInstances().get(FocusedObject),distance,vec ,angle  );
+	}
 	@Override
 	public boolean mouseMoved(int screenX, int screenY) {
 		// TODO Auto-generated method stub
 		if(isRotateEnabled) {
-			Vector3 vec = new Vector3((mousePos.x - screenX)/Gdx.graphics.getWidth(), (mousePos.y - screenY)/Gdx.graphics.getHeight(), 0); 
-			float angle = (float) Math.atan2((vec.x),vec.y) * MathUtils.radiansToDegrees/100; 
-			engine.getCamera().RotateAroundObject(engine.getPrimitives().get(FocusedObject),distance,vec ,angle  );
+			rotateAroundObject(screenX,screenY);
 		}else {
 		mousePos.x = screenX; 
 		mousePos.y = screenY;
@@ -95,7 +105,8 @@ public class Input implements InputProcessor {
 	public boolean scrolled(float amountX, float amountY) {
 		// TODO Auto-generated method stub
 		distance += amountY* 100 * Gdx.graphics.getDeltaTime(); 
-		this.engine.getCamera().FollowObject(engine.getPrimitives().get(FocusedObject), distance);
+		this.engine.getCamera().FollowObject(engine.getModelInstances().get(FocusedObject), distance);
+//		engine.getCamera().getCamera().lookAt(engine.getPrimitives().get(0).transform.getTranslation(new Vector3()));
 		return false;
 	}
 }

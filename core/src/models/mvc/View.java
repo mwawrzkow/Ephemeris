@@ -12,11 +12,11 @@ public class View extends ObserverSubject {
 	model = new Model(); 
 	this.AddObserver(model);
 	}
-	public void render(ModelBatch mb) { 
+	public void render(ModelBatch mb) {
+		model.getCam().update();
 		mb.begin(model.getCam());
 		model.render(mb);
 		mb.end();
-		model.getCam().update(); 
 	}
 	@Override
 	public void NotifyObserver(Subject s) {

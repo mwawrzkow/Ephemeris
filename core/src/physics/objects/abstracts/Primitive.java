@@ -5,7 +5,7 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector3;
 
 public class Primitive{
-	float mass = (float) (5.972); 
+	float mass = (float) (5.972*1e24); 
 	private Vector3 position; 
 	public enum type{ 
 		S, 

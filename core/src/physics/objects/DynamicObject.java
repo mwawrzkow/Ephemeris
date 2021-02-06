@@ -11,7 +11,7 @@ public class DynamicObject extends Primitive{
 	public DynamicObject(ModelInstance i) {
 		super(i);
 		setPosition(new Vector3(0,0,0));
-		setMass((float) (250));
+		setMass((float) (25000));
 		// TODO Auto-generated constructor stub
 	}
 	 public void rotateTowardsObject(Primitive e) {

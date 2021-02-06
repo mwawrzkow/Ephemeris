@@ -43,6 +43,8 @@ public class MyGdxGame extends ApplicationAdapter implements Observer {
     public void create () {
     	modelBatch = new ModelBatch();
         view = new View(); 
+//        modelBatch.;;
+
     }
 
     @Override

@@ -28,7 +28,11 @@ public class CameraObject {
 	public void RotateAroundObject(ModelInstance modelInstance, float distance, Vector3 rot,float angle) {
 //		this.cam.rotate(new Vector3(0,0,1), angle*Gdx.graphics.getDeltaTime());
 		this.cam.position.idt(new Vector3(0,0,0));
-		this.cam.rotate(Vector3.Y,angle);
+		
+//		this.cam.rotate(Vector3.Y,angle);
+		this.cam.rotateAround(modelInstance.transform.getTranslation(new Vector3()), Vector3.Y, angle);
+//		this.cam.rotateAround(modelInstance.transform.getTranslation(new Vector3()), Vector3.X, angle);
+//		this.cam.rotateAround(modelInstance.transform.getTranslation(new Vector3()), Vector3.Z, angle);
 		this.cam.lookAt(modelInstance.transform.getTranslation(new Vector3()));
 	}
 	public void FollowObject(ModelInstance modelInstance,float distance ) {
@@ -38,11 +42,15 @@ public class CameraObject {
 		this.cam.position.z = vec.z+distance;
 		
 		this.cam.lookAt(vec);
+		this.cam.update();
 //		this.cam.direction.x = vec.x;
 //		this.cam.direction.y = vec.y;
 //		this.cam.direction.z = vec.z;
 		
 		
+	}
+	public PerspectiveCamera getCamera() {
+		return cam;
 	}
 	public int getFocusedObject() {
 		return input.getFocusedObject();

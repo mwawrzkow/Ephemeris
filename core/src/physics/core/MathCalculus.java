@@ -14,6 +14,7 @@ public class MathCalculus {
 		Vector3 res; 
 		res = new Vector3(); 
 		float max=  vec.x + vec.y+ vec.z; 
+		max = -max; 
 		// x+y+z = 100%		
 		res.x = (float) (vec.x/max); 
 		res.y = (float) (vec.y/max); 

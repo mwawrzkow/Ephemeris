@@ -22,8 +22,8 @@ public class Model extends ObserverSubject {
         		 
         cam.position.set(150f, 150f, 0f);
         cam.lookAt(0,0,0);
-        cam.near = 1f;
-        cam.far = 300f;
+        cam.near =  10f;
+        cam.far = 300000f;
         cam.update();
 		
         engine = new PEngine();
@@ -39,7 +39,7 @@ public class Model extends ObserverSubject {
 		
 	}
 	public void render(ModelBatch mb) {
-		for(ModelInstance modelInstance: engine.getPrimitives())
+		for(ModelInstance modelInstance: engine.getModelInstances())
 		 mb.render(modelInstance, engine.getEnvironment());
 	}
 	public PerspectiveCamera getCam() {

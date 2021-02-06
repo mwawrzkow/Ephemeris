@@ -1,6 +1,7 @@
 package physics;
 
 import java.io.IOException;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 
 import com.badlogic.gdx.Gdx;
@@ -24,15 +25,17 @@ public class PEngine {
 		@Override
 		public void run() {
 			// TODO Auto-generated method stub
+			
 			try {
-				Thread.sleep(3000);
+				Thread.sleep(1000);
 			} catch (InterruptedException e2) {
 				// TODO Auto-generated catch block
 				e2.printStackTrace();
 			}
 			while(true) {
+				CameraFollow();
 			for(Primitive e: primitives)
-				updatePrimitive(e);
+//				updatePrimitive(e);
 			 
 			try {
 				Thread.sleep(10);
@@ -55,21 +58,25 @@ public class PEngine {
 				((DynamicObject)E).setAcceleration(force);
 				((DynamicObject)E).SymulatePhysics();
 //				((DynamicObject)E).moveToPosition(new Vector3(pos.x, pos.y, 0.f));
-				CameraFollow();
 			}
 			
 		}
 		private Vector3 createForceVector(DynamicObject o) { 
-			 Vector3 acc = o.getAcceleration(); 
-			 Vector3 pos0 = o.getLastPosition(), pos1 = primitives.get(0).getLastPosition(); 
-			 System.out.println("X:"+pos0.x+"Y:"+pos0.y+"Z:"+pos0.z );
-			 double distance =  Math.sqrt(Math.pow(pos0.x-pos1.x, 2)+Math.pow(pos0.y-pos1.y, 2)+Math.pow(pos0.y-pos1.y, 2));
-			 
-			 double oneDimAtt =  (6.67430*1e-10)*(o.getMass()*primitives.get(0).getMass())/Math.pow(distance,2 ); // Force applied to vector 
+//			 Vector3 acc = o.getAcceleration(); 
+			 Vector3 pos0 = o.getLastPosition(),
+					 pos1 = primitives.get(0).getLastPosition(); 
+			 NumberFormat nf = NumberFormat.getInstance();
+			 nf.setMaximumFractionDigits(10);
+//			 System.out.println("X:"+nf.format(pos0.x)+" Y:"+nf.format(pos0.y)+" Z:" +  nf.format(pos0.z) );
+			 double distance =  Math.sqrt(Math.pow(pos0.x-pos1.x, 2)+Math.pow(pos0.y-pos1.y, 2)+Math.pow(pos0.y-pos1.y, 2))*1e3;
+//			 double mass = o.getMass()*primitives.get(0).getMass();
+			 double mass_kg = primitives.get(0).getMass();
+			 double distancesquere = Math.pow(distance,2); 
+			 double oneDimAtt =  (6.67430*1e-11)*mass_kg/distancesquere; // Force applied to vector 
 			 Vector3 onesForceVector = MathCalculus.makeOnesVector(MathCalculus.findLineBetweenPoints(pos0,pos1));
-			 onesForceVector.x *= -oneDimAtt; 
-			 onesForceVector.y *= -oneDimAtt;
-			 onesForceVector.z *= -oneDimAtt;
+			 onesForceVector.x = (float) (onesForceVector.x*oneDimAtt); 
+			 onesForceVector.y = (float) (onesForceVector.y*oneDimAtt);
+			 onesForceVector.z = (float) (onesForceVector.z*oneDimAtt);
 			 return onesForceVector;
 			 
 		}
@@ -107,15 +114,16 @@ public class PEngine {
 		primitives.add((DynamicObject)loader3d.CreateDynamicObject("objs/test/satellite_obj.obj"));
 		//primitives.get(primitives.size() -1 ).getInstance().transform.settoP;
 		((DynamicObject)primitives.get(primitives.size() -1)).rotateTowardsObject(primitives.get(0));
-		((DynamicObject)primitives.get(primitives.size() -1)).moveToPosition(new Vector3(150, 150, 0));
+		((DynamicObject)primitives.get(primitives.size() -1)).moveToPosition(new Vector3(36000, 0, 0));
 	}
-	public ArrayList<ModelInstance>getPrimitives(){
+	public ArrayList<ModelInstance>getModelInstances(){
 		ArrayList<ModelInstance> modelInstance = new ArrayList<ModelInstance>();
 		for(Primitive p: primitives)
 			modelInstance.add(p.getInstance());
 		return modelInstance; 
-		
-		
+	}
+	public ArrayList<Primitive> getPrimitives() {
+		return primitives;
 	}
 	public Environment getEnvironment() { 
 		return this.environment; 
