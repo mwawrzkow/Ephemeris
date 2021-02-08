@@ -7,7 +7,6 @@ import physics.objects.abstracts.Primitive;
 public class StaticObject extends Primitive {
 	public StaticObject(ModelInstance i) {
 		super(i);
-		// TODO Auto-generated constructor stub
-	}		
+	}
 
 }

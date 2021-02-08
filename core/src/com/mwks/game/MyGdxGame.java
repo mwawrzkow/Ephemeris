@@ -32,51 +32,51 @@ import models.observersubject.Observer;
 import models.observersubject.Subject;
 
 public class MyGdxGame extends ApplicationAdapter implements Observer {
-    
-    public Model model;
-    public ModelInstance instance;
-    public ModelBatch modelBatch;
-    
-    public int x= 0; 
-    View view; 
-    @Override
-    public void create () {
-    	modelBatch = new ModelBatch();
-        view = new View(); 
+
+	public Model model;
+	public ModelInstance instance;
+	public ModelBatch modelBatch;
+
+	public int x = 0;
+	View view;
+
+	@Override
+	public void create() {
+		modelBatch = new ModelBatch();
+		view = new View();
 //        modelBatch.;;
 
-    }
+	}
 
-    @Override
-    public void render () {
-        Gdx.gl.glViewport(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);       
-        view.render(modelBatch);
-    }
+	@Override
+	public void render() {
+		Gdx.gl.glViewport(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
+		view.render(modelBatch);
+	}
 
-    @Override
-    public void dispose () {
-        modelBatch.dispose();
-        model.dispose();
-    }
+	@Override
+	public void dispose() {
+		modelBatch.dispose();
+		model.dispose();
+	}
 
-    @Override
-    public void resume () {
-    }
+	@Override
+	public void resume() {
+	}
 
-    @Override
-    public void resize (int width, int height) {
-    	view.getCam().viewportHeight = height; 
-    	view.getCam().viewportWidth = width;
-    }
+	@Override
+	public void resize(int width, int height) {
+		view.getCam().viewportHeight = height;
+		view.getCam().viewportWidth = width;
+	}
 
-    @Override
-    public void pause () {
-    }
+	@Override
+	public void pause() {
+	}
 
 	@Override
 	public void NotifyObserver(Subject s) {
-		// TODO Auto-generated method stub
-		
+
 	}
 }

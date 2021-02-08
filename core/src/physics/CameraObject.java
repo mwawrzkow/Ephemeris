@@ -12,51 +12,49 @@ import com.badlogic.gdx.math.Vector3;
 import com.mwks.game.states.Input;
 
 public class CameraObject {
-	PerspectiveCamera cam; 
-	Input input; 
+	PerspectiveCamera cam;
+	Input input;
+
 	public CameraObject(PerspectiveCamera cam, Input input) {
-		this.cam = cam; 
-		this.input = input; 
+		this.cam = cam;
+		this.input = input;
 	}
-	private Vector3 returnPosArroundObj(Vector3 posObject, Float angleDegrees, Float radius, Float height) {
-	    Float angleRadians = angleDegrees * MathUtils.degreesToRadians;
-	    Vector3 position = new Vector3();
-	    position.set(radius * MathUtils.sin(angleRadians), height, radius * MathUtils.cos(angleRadians));
-	    position.add(posObject); //add the position so it would be arround object
-	    return position;
+
+	public void FocusOnObject(ModelInstance mi) {
+		this.getCamera().lookAt(mi.transform.getTranslation(new Vector3()));
+
 	}
-	public void RotateAroundObject(ModelInstance modelInstance, float distance, Vector3 rot,float angle) {
-//		this.cam.rotate(new Vector3(0,0,1), angle*Gdx.graphics.getDeltaTime());
-		this.cam.position.idt(new Vector3(0,0,0));
-		
-//		this.cam.rotate(Vector3.Y,angle);
-		this.cam.rotateAround(modelInstance.transform.getTranslation(new Vector3()), Vector3.Y, angle);
-//		this.cam.rotateAround(modelInstance.transform.getTranslation(new Vector3()), Vector3.X, angle);
-//		this.cam.rotateAround(modelInstance.transform.getTranslation(new Vector3()), Vector3.Z, angle);
+
+	public void RotateAroundObject(ModelInstance modelInstance, float distance, double phi, double Theta) {
+		this.cam.position.idt(new Vector3(0, 0, 0));
+		float x = (float) (distance * Math.cos(phi) * Math.sin(Theta));
+		float y = (float) (distance * Math.sin(phi) * Math.sin(Theta));
+		float z = (float) (distance * Math.cos(Theta));
+		this.cam.position.x = x;
+		this.cam.position.y = y;
+		this.cam.position.z = z;
 		this.cam.lookAt(modelInstance.transform.getTranslation(new Vector3()));
 	}
-	public void FollowObject(ModelInstance modelInstance,float distance ) {
-		Vector3 vec =  modelInstance.transform.getTranslation(new Vector3());
-		this.cam.position.x = vec.x+distance;
-		this.cam.position.y = vec.y+distance;
-		this.cam.position.z = vec.z+distance;
-		
+
+	public void FollowObject(ModelInstance modelInstance, float distance) {
+		Vector3 vec = modelInstance.transform.getTranslation(new Vector3());
+		this.cam.position.x = vec.x + distance;
+		this.cam.position.y = vec.y + distance;
+		this.cam.position.z = vec.z + distance;
 		this.cam.lookAt(vec);
 		this.cam.update();
-//		this.cam.direction.x = vec.x;
-//		this.cam.direction.y = vec.y;
-//		this.cam.direction.z = vec.z;
-		
-		
 	}
+
 	public PerspectiveCamera getCamera() {
 		return cam;
 	}
+
 	public int getFocusedObject() {
 		return input.getFocusedObject();
 	}
-	public float getDistance() { 
+
+	public float getDistance() {
 		return input.getDistance();
 	}
-	
+
 }
